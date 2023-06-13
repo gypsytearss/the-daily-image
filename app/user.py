@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User
@@ -8,13 +9,13 @@ user = Blueprint('user', __name__)
 
 @user.route('/login')
 def login():
-    return render_template("login.html")
+    return render_template("login.html", current_user=True if current_user.is_authenticated else False)
 
 @user.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+    email = request.form.get('inputEmail')
+    password = request.form.get('inputPassword')
+    remember = True if request.form.get('flexCheckDefault') else False
 
     user = User.query.filter_by(email=email).first()
 
@@ -25,11 +26,12 @@ def login_post():
         return redirect(url_for('user.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
+    login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
 @user.route('/signup')
 def signup():
-    return render_template("signup.html")
+    return render_template("signup.html", current_user=True if current_user.is_authenticated else False)
 
 @user.route('/signup', methods=["POST"])
 def signup_post():
@@ -54,5 +56,7 @@ def signup_post():
     return redirect(url_for('user.login'))
 
 @user.route('/logout')
+@login_required
 def logout():
-    return render_template("logout.html")
+    logout_user()
+    return redirect(url_for("main.index"))
