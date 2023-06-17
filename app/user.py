@@ -9,7 +9,7 @@ user = Blueprint('user', __name__)
 
 @user.route('/login')
 def login():
-    return render_template("login.html", current_user=True if current_user.is_authenticated else False)
+    return render_template("login.html", current_user=current_user)
 
 @user.route('/login', methods=['POST'])
 def login_post():
@@ -31,7 +31,7 @@ def login_post():
 
 @user.route('/signup')
 def signup():
-    return render_template("signup.html", current_user=True if current_user.is_authenticated else False)
+    return render_template("signup.html", current_user=current_user)
 
 @user.route('/signup', methods=["POST"])
 def signup_post():
