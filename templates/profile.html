@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- <h2 class="title">
-  Welcome, {{ current_user.name }}!
-</h2> -->
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-1">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="profile-circle-large mx-auto">
+                <p>{{ current_user.initials }}</p>
+            </div>
+            <h2 class="title">{{ current_user.name }}</h2>
+            <p class="lead"><strong>Email: </strong>{{ current_user.email }}</p>
+        </div>
+    </div>
+</section>
 
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
@@ -13,15 +22,19 @@
         <div class="col">
             <div class="card shadow-sm">
               <svg class="bd-placeholder-img card-img-top" width="100%" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              <img id="farts" src={{ uimg.thumbnail_url }} />
+              <img id="{{ uimg.image_uuid }}" src={{ uimg.thumbnail_url }} />
             </svg>
               <div class="card-body">
-                <p class="card-text">Caption: {{ uimg.annotation }}</p>
+                <p class="card-text">"{{ uimg.annotation|truncate(length=200, killwords=False, end='...') }}"</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <form method="GET" action="{{ url_for('main.image', image_uuid=uimg.image_uuid) }}">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                    </form>
                   </div>
-                  <small class="text-body-secondary">Date: {{ uimg.timestamp }}</small>
+                  <div title="{{ uimg.timestamp }}">
+                  <small class="text-body-secondary">{{ uimg.timestamp.strftime('%Y-%m-%d') }}</small>
+                </div>
                 </div>
               </div>
             </div>

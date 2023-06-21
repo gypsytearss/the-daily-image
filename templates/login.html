@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
 
     <p>New to the site? <a href="{{ url_for('user.signup') }}">Sign Up</a> instead!</p>
 
@@ -29,4 +30,5 @@
         <button class="btn btn-primary w-100 py-2" type="submit">Sign In</button>
     </form>
     </main>
+</div>
 {% endblock %}

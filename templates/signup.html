@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<div class="container">
+
     <main class="form-signin w-100 m-auto">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -27,4 +29,5 @@
         <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
     </form>
     </main>
+</div>
 {% endblock %}
