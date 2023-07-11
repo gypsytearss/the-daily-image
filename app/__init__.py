@@ -1,15 +1,24 @@
 import os
+
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
+from .models import User
+
 db = SQLAlchemy()
 
+
 def create_app() -> Flask:
+    """
+    Create and return the flask app.
+    """
     template_dir = os.path.abspath('./templates')
     static_dir = os.path.abspath('./static')
-    
-    app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+
+    app = Flask(__name__,
+                template_folder=template_dir,
+                static_folder=static_dir)
 
     app.config["SECRET_KEY"] = "my-secret-key"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
@@ -20,8 +29,6 @@ def create_app() -> Flask:
     login_manager = LoginManager()
     login_manager.login_view = 'user.login'
     login_manager.init_app(app)
-
-    from .models import User
 
     @login_manager.user_loader
     def load_user(user_id):

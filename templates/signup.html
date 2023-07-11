@@ -5,29 +5,30 @@
 <div class="container">
 
     <main class="form-signin w-100 m-auto">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
         <div class="notification is-danger">
             {{ messages[0] }}. Go to <a href="{{ url_for('user.login') }}">login page</a>.
         </div>
-    {% endif %}
-    {% endwith %}
-    <form method="POST" action="/signup">
-        <h2 class="h3 mb-3 fw-normal">Sign Up</h2>
-        <div class="form-floating">
-            <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <label for="inputEmail" class="sr-only">Email address</label>
-        </div>
-        <div class="form-floating">
-            <input type="name" name="inputName" class="form-control" placeholder="Name" required="">
-            <label for="inputName" class="sr-only">Name</label>
-        </div>
-        <div class="form-floating">
-            <input type="password" name="inputPassword" class="form-control" placeholder="Password" required="">
-            <label for="inputPassword" class="sr-only">Password</label>
-        </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
-    </form>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/signup">
+            <h2 class="h3 mb-3 fw-normal">Sign Up</h2>
+            <div class="form-floating">
+                <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required=""
+                    autofocus="">
+                <label for="inputEmail" class="sr-only">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="name" name="inputName" class="form-control" placeholder="Name" required="">
+                <label for="inputName" class="sr-only">Name</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required="">
+                <label for="inputPassword" class="sr-only">Password</label>
+            </div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
+        </form>
     </main>
 </div>
 {% endblock %}

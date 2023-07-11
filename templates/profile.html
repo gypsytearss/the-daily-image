@@ -18,29 +18,32 @@
     <div class="container">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for uimg in user_images -%}
-        <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              <img id="{{ uimg.image_uuid }}" src={{ uimg.thumbnail_url }} />
-            </svg>
-              <div class="card-body">
-                <p class="card-text">"{{ uimg.annotation|truncate(length=200, killwords=False, end='...') }}"</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <form method="GET" action="{{ url_for('main.image', image_uuid=uimg.image_uuid) }}">
-                        <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
-                    </form>
-                  </div>
-                  <div title="{{ uimg.timestamp }}">
-                  <small class="text-body-secondary">{{ uimg.timestamp.strftime('%Y-%m-%d') }}</small>
+            {% for uimg in user_images -%}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="50"
+                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                        preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <img id="{{ uimg.image_uuid }}" src={{ uimg.thumbnail_url }} />
+                    </svg>
+                    <div class="card-body">
+                        <p class="card-text">"{{ uimg.annotation|truncate(length=200, killwords=False, end='...') }}"
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <form method="GET" action="{{ url_for('main.image', image_uuid=uimg.image_uuid) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                                </form>
+                            </div>
+                            <div title="{{ uimg.timestamp }}">
+                                <small class="text-body-secondary">{{ uimg.timestamp.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-              </div>
             </div>
-          </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
 
-{% endblock %}
+    {% endblock %}
