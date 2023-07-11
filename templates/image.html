@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
+
+    <div class="position-fixed top-2 start-2 mb-3 me-3">
+        <button class="btn btn-bd-secondary py-2 d-flex align-items-center" id="bd-timer-button" type="button"
+            disabled="true" aria-label="timer">
+            <span id="timer"></span>
+        </button>
+    </div>
+
+
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <span class="badge bg-success">
