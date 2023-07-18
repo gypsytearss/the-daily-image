@@ -1,3 +1,4 @@
+import os
 import random
 import sqlalchemy
 import uuid
@@ -69,7 +70,11 @@ def image(image_uuid: str = None):
     """
 
     res = db.session.query(Images)
-    image_uuid = uuid.UUID(image_uuid).hex
+
+    if os.environ.get("ENV") == "PROD":
+        image_uuid = uuid.UUID(image_uuid)
+    else:
+        image_uuid = uuid.UUID(image_uuid).hex
 
     image = res.filter(
         cast(Images.uuid, sqlalchemy.String) == image_uuid).first()
