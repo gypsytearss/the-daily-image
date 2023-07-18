@@ -16,7 +16,6 @@ class User(UserMixin, db.Model):
         if not self.name:
             return "?"
         names = self.name.split()
-        print(f"Names {names}")
         initials = names[0][0].upper()
         if len(names) > 1:
             initials += names[-1][0].upper()

@@ -25,9 +25,9 @@
     <div class="col-md-6 px-0 shadow-sm">
         <br>
         <img src={{ image.url.strip('"') }} class="img-fluid" alt="{{ image.title }} by {{ image.artist }}" />
-        <h6><small>"{{ image.title }}" by {{ image.creator }} is marked with license <a
-                    class="link-primary link-offset-2 link-underline-opacity-0" href="{{ image.license_url }}">{{
-                    image.license }} {{ image.license_version }}.</a></small></h6>
+        <small class="text-secondary">"{{ image.title }}" by {{ image.creator }} is marked with license <a
+                class="link-primary link-offset-2 link-underline-opacity-0" href="{{ image.license_url }}">{{
+                image.license }} {{ image.license_version }}.</a></small>
     </div>
     <br><br>
     <form method="POST" action="/image/{{ image.uuid }}">
