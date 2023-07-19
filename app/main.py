@@ -63,7 +63,7 @@ def new_image():
     return redirect(url_for("main.image", image_uuid=image_uuid))
 
 
-@main.route("/image/<image_uuid>", )
+@main.route("/image/<image_uuid>", methods=["GET"])
 def image(image_uuid: str = None):
     """
     Route to present a selected image for annotation / updating.
@@ -71,22 +71,33 @@ def image(image_uuid: str = None):
 
     res = db.session.query(Images)
 
+    user_image: Optional[Images] = None
+
     if os.environ.get("ENV") == "PROD":
         image_uuid = uuid.UUID(image_uuid)
+
+        image = res.filter(Images.uuid == image_uuid).first()
+
+        # If current user is logged in, include current caption in presentation
+        if current_user.is_authenticated:
+            user_image = db.session.query(UserImages).filter(
+                UserImages.image_uuid == image_uuid).filter(
+                    UserImages.user_id == current_user.id).first()
     else:
         image_uuid = uuid.UUID(image_uuid).hex
 
-    image = res.filter(
-        cast(Images.uuid, sqlalchemy.String) == image_uuid).first()
+        image = res.filter(
+            cast(Images.uuid, sqlalchemy.String) == image_uuid).first()
 
-    # If current user is logged in, include current caption in presentation
+        # If current user is logged in, include current caption in presentation
+        if current_user.is_authenticated:
+            user_image = db.session.query(UserImages).filter(
+                cast(UserImages.image_uuid, sqlalchemy.String) == image_uuid
+            ).filter(UserImages.user_id == current_user.id).first()
+
     annotation: Optional[str] = None
-    if current_user.is_authenticated:
-        user_image = db.session.query(UserImages).filter(
-            cast(UserImages.image_uuid, sqlalchemy.String) ==
-            image_uuid).filter(UserImages.user_id == current_user.id).first()
-        if user_image:
-            annotation = user_image.annotation
+    if user_image:
+        annotation = user_image.annotation
 
     return render_template(
         "image.html",
