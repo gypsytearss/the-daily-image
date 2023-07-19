@@ -20,9 +20,10 @@
             user-select: none;
         }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .navbar-brand strong {
+                display: none;
             }
         }
 
@@ -221,12 +222,12 @@
         </ul>
     </div>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+    <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm">
         <a class="navbar-brand" href="{{ url_for('main.index') }}">
             <img id="logo" src="{{ url_for('static', filename='camera_icon.svg') }}" alt="logo">
             <strong>The Daily Image</strong>
         </a>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div class="navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('main.new_image') }}">New Image</a>
